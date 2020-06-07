@@ -1,0 +1,4 @@
+{
+  "sources": ["./css/"],
+  "output": "./dist/"
+}
