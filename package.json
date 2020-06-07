@@ -1,6 +1,6 @@
 {
-  "name": "combine-css",
-  "version": "1.0.0",
+  "name": "unify-css",
+  "version": "1.0.1",
   "description": "Simple CSS postprocessor",
   "main": "./lib/index.js",
   "bin": {
@@ -10,7 +10,7 @@
     "start": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
     "create": "npm run build && npm run test",
     "build": "tsc -p .",
-    "test": "sudo npm i -g && cd test && uni",
+    "test": "sudo npm i -g && cd test && uni -C \"option\"",
     "refresh": "rm -rf ./node_modules ./package-lock.json && npm install"
   },
   "author": "Anton Mordik",
