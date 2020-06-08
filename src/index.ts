@@ -6,9 +6,10 @@ import path from 'path';
 import chalk from 'chalk';
 
 const cli = new Command();
+const failText = 'Running unify-css ' + chalk.red('failed');
 
 cli.version('0.0.1');
-console.log(chalk.red('Unify CSS started'));
+console.log(chalk.green('Unify CSS started'));
 
 cli
   .option('-C, --config-path <path>', 'path to .uniconfig')
@@ -17,7 +18,29 @@ cli
   .option('-P, --plugin <path>', 'path to js plugin file')
   .parse(process.argv);
 
-console.log('config-path:', cli.configPath);
-console.log('source:', cli.source);
-console.log('output:', cli.output);
-console.log('plugin:', cli.plugin);
+const configPath = path.resolve(process.cwd(), cli.configPath || './', '.uniconfig')
+interface IConfig {
+  sources: string[];
+  output: string;
+}
+const configFile = fs.readFileSync(configPath).toString();
+let config: IConfig;
+try {
+  config = JSON.parse(configFile);
+} catch (jsonParseError) {
+  console.log(chalk.red(`Cannot read '${configPath}'`));
+  console.log(failText);
+  process.exitCode = 1;
+  process.exit();
+}
+
+if (!Array.isArray(config.sources) || !config.sources.every(source => typeof source === 'string')) {
+  console.log(chalk.red('Incorrect format of sources.') + ' Use string[] notation.')
+  console.log(failText);
+  process.exitCode = 1;
+  process.exit();
+}
+
+const sources = config.sources.map(source => path.resolve(process.cwd(), source));
+
+console.log(sources);
