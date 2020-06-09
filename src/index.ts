@@ -4,7 +4,8 @@ import { Command } from 'commander';
 import fs from 'fs';
 import path from 'path';
 import chalk from 'chalk';
-
+import { resolvePaths } from './utils/resolver';
+import { readFiles } from './utils/reader';
 const cli = new Command();
 const failText = 'Running unify-css ' + chalk.red('failed');
 
@@ -23,9 +24,9 @@ interface IConfig {
   sources: string[];
   output: string;
 }
-const configFile = fs.readFileSync(configPath).toString();
 let config: IConfig;
 try {
+  const configFile = fs.readFileSync(configPath).toString();
   config = JSON.parse(configFile);
 } catch (jsonParseError) {
   console.log(chalk.red(`Cannot read '${configPath}'`));
@@ -43,4 +44,6 @@ if (!Array.isArray(config.sources) || !config.sources.every(source => typeof sou
 
 const sources = config.sources.map(source => path.resolve(process.cwd(), source));
 
-console.log(sources);
+const cssPaths = resolvePaths(sources);
+
+const cssFiles = readFiles(cssPaths);
