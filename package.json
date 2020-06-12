@@ -16,9 +16,11 @@
   "author": "Anton Mordik",
   "license": "ISC",
   "dependencies": {
+    "@types/css": "0.0.31",
     "chalk": "^4.0.0",
     "clear": "^0.1.0",
     "commander": "^5.1.0",
+    "css": "^2.2.4",
     "figlet": "^1.4.0",
     "path": "^0.12.7"
   },

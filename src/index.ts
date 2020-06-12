@@ -6,6 +6,7 @@ import path from 'path';
 import chalk from 'chalk';
 import { resolvePaths } from './utils/resolver';
 import { readFiles } from './utils/reader';
+import { process as parseProcess } from './utils/parser';
 const cli = new Command();
 const failText = 'Running unify-css ' + chalk.red('failed');
 
@@ -47,3 +48,5 @@ const sources = config.sources.map(source => path.resolve(process.cwd(), source)
 const cssPaths = resolvePaths(sources);
 
 const cssFiles = readFiles(cssPaths);
+
+const declarations = cssFiles.map(file => parseProcess(file))
