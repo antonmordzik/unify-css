@@ -4,7 +4,7 @@ interface ICSS {
   [prop: string]: string;
 }
 
-interface IDeclaration {
+export interface IDeclaration {
   selectors: string[];
   props: ICSS;
 }
