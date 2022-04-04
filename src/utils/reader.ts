@@ -1,10 +1,3 @@
 import fs from 'fs';
 
-export const readFiles = (paths: string[]): string[] => {
-  const result: string[] = [];
-  for (const path of paths) {
-    const file = fs.readFileSync(path).toString();
-    result.push(file);
-  }
-  return result;
-}
+export const read = (paths: string[]): string[] => paths.map((path) => fs.readFileSync(path).toString());

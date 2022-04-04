@@ -1,29 +1,30 @@
-import { parse, Rule, Declaration } from 'css';
+import { parse as _parse, Rule, Declaration } from 'css';
 
-interface ICSS {
+type CSS = {
   [prop: string]: string;
-}
+};
 
-export interface IDeclaration {
+export type CSSDeclaration = {
   selectors: string[];
-  props: ICSS;
-}
+  props: CSS;
+};
 
-export const process = (text: string): IDeclaration[] => {
-  const parsedObj = parse(text);
+// TODO: simplify rules mapfn
+export const parse = (text: string): CSSDeclaration[] => {
+  const parsedObj = _parse(text);
 
-  if (parsedObj.stylesheet) {
-    const rules: Rule[] = parsedObj.stylesheet.rules.filter(entry => entry.type === 'rule');
-    const declarations: IDeclaration[] = rules.map((rule: Rule) => ({
-      selectors: rule.selectors as string[],
-      props: (rule.declarations || []).filter(dec => dec.type === 'declaration')
-        .map((declaration: Declaration) => ({
-          [declaration.property as string]: declaration.value as string
-        }))
-        .reduce((acc: ICSS, next: ICSS): ICSS => ({ ...acc, ...next }), {})
-    }));
-    return declarations;
+  if (!parsedObj.stylesheet) {
+    return [];
   }
 
-  return [];
-}
+  const rules: Rule[] = parsedObj.stylesheet.rules.filter((entry) => entry.type === 'rule');
+  const declarations: CSSDeclaration[] = rules.map((rule: Rule) => ({
+    selectors: rule.selectors as string[],
+    props: (rule.declarations || []).filter((dec) => dec.type === 'declaration')
+      .map<CSS>((declaration: Declaration) => ({
+      [declaration.property as string]: declaration.value as string,
+    }))
+      .reduce<CSS>((acc, next) => ({ ...acc, ...next }), {}),
+  }));
+  return declarations;
+};
