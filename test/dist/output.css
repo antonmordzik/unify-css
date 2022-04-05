@@ -1,3 +1,5 @@
+/* Temporary as reference */
+
 :root {
   --foo: 1rem;
   --bar: 2rem;
@@ -15,18 +17,16 @@
   }
 }
 
-.a, .c {
+.a, .c, .b:hover {
   background-color: red;
+}
+
+.a, .c, .b {
   color: white;
 }
 
 .b {
   background-color: green;
-  color: white;
   border: thin solid green;
   animation: some-animation 1000ms infinite;
-}
-
-.b:hover {
-  background-color: red;
 }

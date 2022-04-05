@@ -1,17 +1,15 @@
 #!/usr/bin/env node
 
-import { resolve } from './utils/resolver';
-import { read } from './utils/reader';
 import { CliOptions, setupCli } from './cli';
 import { getConfig } from './config';
+import { FS } from './utils/fs';
+import { Parser } from './utils/parser';
 
 const run = (options: CliOptions) => {
-  const config = getConfig(options);
+  const fs = new FS(getConfig(options));
+  const files = fs.readFiles();
 
-  const cssPaths = resolve(config.sources);
-  const cssFiles = read(cssPaths);
-
-  console.log(cssFiles);
+  new Parser(files).parse();
 };
 
 const [options] = setupCli();

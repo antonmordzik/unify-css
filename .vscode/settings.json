@@ -1,0 +1,7 @@
+{
+  "explorer.experimental.fileNesting.enabled": true,
+  "explorer.experimental.fileNesting.patterns": {
+    "pachage.json": "package.json, package-lock.json",
+    "tsconfig.json": "tsconfig.json, readme.md, .gitignore, .eslintrc",
+  }
+}

@@ -16,6 +16,8 @@
     "implicit-arrow-linebreak": "off",
     "import/prefer-default-export": "off",
     "max-len": ["error", { "code": 120 }],
-    "no-console": "off"
+    "no-console": "off",
+    "no-continue": "off",
+    "no-restricted-syntax": "off"
   }
 }
